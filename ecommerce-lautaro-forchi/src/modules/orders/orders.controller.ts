@@ -2,8 +2,9 @@ import { Body, Controller, Get, Param, ParseUUIDPipe, Post, Query, UseGuards } f
 import { OrdersService } from "./orders.service";
 import { CreateOrderDtop } from "./orders.dto";
 import { AuthGuard } from "../auth/auth.guard";
+import { ApiTags } from "@nestjs/swagger";
 
-
+@ApiTags('orders')
 @Controller('orders')
 export class OrdersController {
     constructor(private readonly orderService: OrdersService) {}

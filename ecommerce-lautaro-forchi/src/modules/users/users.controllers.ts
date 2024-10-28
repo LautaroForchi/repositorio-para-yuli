@@ -4,13 +4,18 @@ import { usersService } from "./users.service";
 import { UpdateUserDto } from "./users.dtoopcional";
 //import { CreateUserDto } from "./users.dto";
 import { AuthGuard } from "../auth/auth.guard";
-
+import { Roles } from "src/decorators/roles.decorator";
+import { Role } from "./roles.enum";
+import { RolesGuard } from "../auth/roles.guard";
+import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
+@ApiTags('users')
 @Controller('users')
 export class usersControllers{
     constructor (private readonly usersService: usersService){}
-    
+    @ApiBearerAuth()
     @Get()
-    @UseGuards(AuthGuard)
+    @Roles(Role.Admin)
+    @UseGuards(AuthGuard, RolesGuard)
     @HttpCode(HttpStatus.OK)
     getUsers(
         @Query('page') page: number=1,
@@ -32,6 +37,7 @@ export class usersControllers{
     async createUser(@Body() user: CreateUserDto) {
         return this.usersService.postUsers(user);
     }*/
+    @ApiBearerAuth()
     @Put(':id')
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK) // Especifica el estado HTTP 200
@@ -40,7 +46,7 @@ export class usersControllers{
     }
     
 
-
+    @ApiBearerAuth()
     @Delete(':id')
     @UseGuards(AuthGuard)
     @HttpCode(HttpStatus.OK) // Especifica el estado HTTP 200

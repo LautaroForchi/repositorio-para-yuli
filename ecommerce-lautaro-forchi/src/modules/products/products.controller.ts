@@ -4,7 +4,11 @@ import { Product } from "src/entities/products.entity";
 import { CreateProductDto } from "./products.dto";
 import { UpdateProductsDto } from "./products.dtoopcional";
 import { AuthGuard } from "../auth/auth.guard";
-
+import { RolesGuard } from "../auth/roles.guard";
+import { Roles } from "src/decorators/roles.decorator";
+import { Role } from "../users/roles.enum";
+import { ApiTags } from "@nestjs/swagger";
+@ApiTags('products')
 @Controller('products')
 export class productsControllers {
     constructor(
@@ -39,8 +43,10 @@ export class productsControllers {
         return { id: product.id };  // Devuelve solo el ID del producto
     }*/
 
-    @UseGuards(AuthGuard)
+    
     @Put(':id')
+    @Roles(Role.Admin)
+    @UseGuards(AuthGuard, RolesGuard)
     @HttpCode(HttpStatus.OK) // Especifica que el estado HTTP es 200
     @UsePipes(new ValidationPipe({ whitelist: true })) // Aplica ValidationPipe con whitelist para filtrar propiedades no permitidas
     async putProduct(@Param('id') id: string, @Body() updatedProduct: Product) {

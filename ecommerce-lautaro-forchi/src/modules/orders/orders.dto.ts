@@ -6,7 +6,10 @@ export class CreateOrderDtop{
     @IsUUID()
     userId: string;
 
-
+    /**
+     * Es un array de productos
+     * 
+     */
     @IsArray()
     @ArrayMinSize(1)
     product: Partial<Product[]>;

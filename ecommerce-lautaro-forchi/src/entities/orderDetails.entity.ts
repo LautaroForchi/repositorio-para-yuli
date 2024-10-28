@@ -1,12 +1,20 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToOne, ManyToMany, JoinTable, JoinColumn } from 'typeorm';
 import { Orders } from './orders.entity';
 import { Product } from './products.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity({ name: 'order_details' })
 export class OrderDetails {
+  @ApiProperty({
+    description: 'uuid generado por la base de datos'
+  })
   @PrimaryGeneratedColumn('uuid')
   id: string;
-
+  
+  @ApiProperty({
+    description: 'Debe ser un numero con coma con max 2 decimales',
+    example:'10.99'
+  })
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 

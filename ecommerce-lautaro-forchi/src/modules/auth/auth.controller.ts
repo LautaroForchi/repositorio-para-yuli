@@ -2,7 +2,9 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post, UsePipes, Validation
 import { authService } from "./auth.service";
 import { SignInDto } from "./auth.dto";
 import { CreateUserDto, LoginUserDTO } from "../users/users.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags('auth')
 @Controller('auth')   // aca defninmos el que en el url va a ser /auth
 export class authControllers{
     constructor (private readonly authService: authService ){}/*crea una propiedad privada dentro de esta clase que voy a poder utilizar dentro de otros metodos*/
